@@ -10,7 +10,7 @@ const TheirMessage = ({ lastMessage, message }) => {
         <div
           className="message-avatar"
           style={{
-            backgroundImage: message.sender && `url($(message.sender.avatar))`
+            backgroundImage: message.sender && `url(${message.sender.avatar})`
           }}
         />
       )}
