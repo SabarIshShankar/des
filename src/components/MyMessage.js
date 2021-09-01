@@ -11,6 +11,7 @@ const MyMessage = ({ message }) => {
       />
     );
   }
+
   return (
     <div
       className="message"
@@ -25,4 +26,5 @@ const MyMessage = ({ message }) => {
     </div>
   );
 };
+
 export default MyMessage;
