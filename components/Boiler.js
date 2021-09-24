@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Component } from "react";
 import {
   AppRegistry,
   Text,
@@ -60,3 +60,34 @@ DeviceEventEmitter.addListener("CallFailed", (callId, code, reason) => {
   console.log("Call failed. Code" + code + "Reason" + reason);
   uaInstance.setModalText("Call failed", "idle");
 });
+
+DeviceEventEmitter.addListener("CallDisconnected", (callId) => {
+  console.log("Call disconnected");
+  uaInstance.callDisconnected(callId);
+});
+
+DeviceEventEmitter.addListener("IncomingCall", (incomingCall) => {
+  console.log("Inbound Call");
+  currentCallId = incomingCall.callId;
+  uaInstance.setModalText(
+    "Inbound call from" + incomingCall.from,
+    "inboundcall"
+  );
+});
+
+export default class Boiler extends Component {
+  constructor() {
+    super();
+    this.state = {
+      modalText: "",
+      isModalOpen: false,
+      status: "idle"
+    };
+    VoxImplant.SDK.switchToCamera(camera);
+  }
+
+  componentDidMount() {
+    uaInstance = this;
+    this._thisNumber.focus();
+  }
+}
