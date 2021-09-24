@@ -90,4 +90,32 @@ export default class Boiler extends Component {
     uaInstance = this;
     this._thisNumber.focus();
   }
+
+  updateNumber(text) {
+    number = text;
+    this._thisNumber.setNativeProps({ text: text });
+  }
+  onSubmit(event) {
+    this.makeCall();
+  }
+  makeCall(event) {
+    console.log("calling" + number);
+    VoxImplant.SDK.createCall(
+      number,
+      settings_video,
+      null,
+      function (callId) {
+        if (settings_p2p)
+          VoxImplant.SDK.startCall(callId, { "X-DirectCall": "true" });
+        else VoxImplant.SDK.startCall(callId);
+        this.setState(
+          update(this.state, {
+            $merge: {
+              status: "calling"
+            }
+          })
+        );
+      }.bind(this)
+    );
+  }
 }
