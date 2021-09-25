@@ -237,6 +237,27 @@ export default class Boiler extends Component{
     }
   }
 
+  static navigationOptions = {
+    headerStyle: {
+      backgroundColor: '#16a085',
+      elevation: null
+    },
+    headerLeft: null
+  };
+
+  render(){
+    var button,
+    modalButtons = <View style={styles.modalButtons}/>,
+    settingsTable, keypad, videoPanel, callingText, numberInput, flipButton;
+
+    if(settings_video && this.state.status != "connected_keypad")
+      videoPanel = (
+        <View style={styles.videopanel}>
+        <VoxImplant.RemoteView style={styles.remoteVideo}/>
+        <VoxImplant.Preview style={styles.selfView}/>
+        </View>
+      )
+  }
   
 }
 
