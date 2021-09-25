@@ -256,27 +256,53 @@ export default class Boiler extends Component{
         <VoxImplant.RemoteView style={styles.remoteVideo}/>
         <VoxImplant.Preview style={styles.selfView}/>
         </View>
-      )
+      );
+
+      if(settings_video)
+        flipButton = (
+          <View style={{width: 70, height: 70, marginLeft: 10}}>
+          <Icon.Button name="flip-camera" 
+          style={[styles.icon, styles.keypad_icon, {
+            alignSelf: "center"
+          }]}
+          size={13} color="#2b2b2b"
+          backgroundColor={() => this.switchCamera()}
+          iconStyle={{marginLeft: 9}}/>
+          
+          </View>
+        );
+
+        if(this.state.status == 'idle'){
+          numberInput = (
+            <TextInput style={[styles.formInput, styles.numberInput]}
+            onChangeText={e => this.updateNumber(e)}
+            placeholder="User to call"
+            initialValue={number}
+            onSubmitEditing={e => this.onSubmit(e)}
+            ref={component => (this._thisNumber = component)}
+            autoCapitalize="none"
+            autoCorrect={false}/>
+          );
+
+          settingsTable = (
+            <View style={{flex: 1, jstifyContent: 'flex-end'}}>
+            <View style={styles.settings_table}>
+            <View style={styles.settings_switch}>
+            <Text style={styles.settings_label}>Perr to Peer</Text>
+            <ColorSwitch defaultValue={settings_p2p}
+            valueUpdate={value => {
+              settings_p2p = value;
+            }}/>
+            </View>
+            <View style={styles.settings_switch}>
+            <Text style={styles.settings_label}>Video</Text>
+            <ColorSwitch defaultValue={settings_video}
+            valueUpdate={e => this.videoSwitch(e)}/>
+            </View>
+            </View>
+            </View>
+          );
+        }
   }
   
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
