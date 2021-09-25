@@ -185,6 +185,58 @@ export default class Boiler extends Component{
     }
   }
 
+  switchSpeaker(){
+    if(!loudSpeaker) loudSpeaker = true;
+    else loudSpeaker = false;
+    VoxImplant.SDK.setUseLoudspeaker(loudSpeaker);
+  }
+
+  switchMute(){
+    if(!micMuted) micMuted = true;
+    else micMuted = false;
+    VoxImplant.SDK.setMute(micMuted);
+  }
+
+  _keypadPressed(value){
+    console.log("Send DTMF" +  value + "for call id" + currentCallId);
+    VoxImplant.SDK.sendDTMF(currentCallId, value);
+  }
+
+  videoSwitch(value){
+    settings_video = value;
+    setTimeout(() => {
+      this.forceUpdate();
+    }, 200);
+  }
+  toggleVideo(){
+    if(!sendVideo) sendVideo = true;
+    else sendVideo = false;
+    VoxImplant.SDK.sendVideo(sendVideo);
+  }
+
+  switchCamera(){
+    if(camera == "front"){
+      VoxImplant.SDK.switchToCamera("back");
+      camera = "back";
+    } else {
+      VoxImplant.SDK.switchToCamera("front");
+      camera="front"
+    }
+  }
+  
+  closeModal(force){
+    if(this.state.status != "inboundcall" || force === true){
+      this.setState(
+        update(this.state, {
+          $merge: {
+            isModalOpen: false,
+            status: force === true ? this.state.status: "idle"
+          }
+        })
+      );
+    }
+  }
+
   
 }
 
